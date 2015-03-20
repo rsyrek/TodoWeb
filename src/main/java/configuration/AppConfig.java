@@ -15,13 +15,13 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import controllers.TodoController;
-import services.TaskService;
 
-@ComponentScan(value = {"configuration,controllers,entities,repositories,services"})
+@ComponentScan(value = {"controllers,entities,repositories,services"})
+@EnableWebMvc
 @Configuration
-public class AppConfig {
+public class AppConfig{
 	@Bean
 	public DataSource dataSource() {
 	    EmbeddedDatabaseBuilder databaseBuilder = new EmbeddedDatabaseBuilder();
@@ -54,7 +54,21 @@ public class AppConfig {
 	    return properties;
 	}
 	
-	@Bean
+//	@Bean
+//	public ViewResolver cnViewResolver(){
+//		return new ContentNegotiatingViewResolver();
+//	}
+	
+//	@Bean
+//	public View tasks(){
+//		return new MappingJackson2JsonView();
+//	}
+	
+//	@Bean
+//	public GlobalExceptionHandler exceptionHandler(){
+//		return new GlobalExceptionHandler();
+//	}
+	/*@Bean
     public TodoController todoController() {
         return new TodoController();
     }
@@ -62,5 +76,5 @@ public class AppConfig {
     @Bean
     public TaskService taskService() {
         return new TaskService();
-    }
+    }*/
 }
