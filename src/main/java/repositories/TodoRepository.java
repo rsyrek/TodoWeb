@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import entities.Todo;
 
 @Repository
-@Transactional(readOnly = true)
+@Transactional
 public class TodoRepository {
 	@PersistenceContext
     private EntityManager em;
@@ -20,5 +20,15 @@ public class TodoRepository {
         return em.createQuery("select t from Todo t", Todo.class).getResultList();
     }
     
+    public Todo getById(long id){
+    	return em.find(Todo.class, id);
+    }
     
+    public void saveTodo(Todo todo){
+    	em.merge(todo);
+    }
+    
+    public void addTodo(Todo todo){
+    	em.persist(todo);
+    }
 }

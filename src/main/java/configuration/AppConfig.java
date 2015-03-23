@@ -15,11 +15,13 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
 @ComponentScan(value = {"controllers,entities,repositories,services"})
 @EnableWebMvc
+@EnableTransactionManagement
 @Configuration
 public class AppConfig{
 	@Bean
@@ -33,7 +35,6 @@ public class AppConfig{
 	    transactionManager.setEntityManagerFactory(emf);
 	    return transactionManager;
 	}
-
 
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -53,28 +54,4 @@ public class AppConfig{
 	    properties.setProperty("hibernate.show_sql", "true");
 	    return properties;
 	}
-	
-//	@Bean
-//	public ViewResolver cnViewResolver(){
-//		return new ContentNegotiatingViewResolver();
-//	}
-	
-//	@Bean
-//	public View tasks(){
-//		return new MappingJackson2JsonView();
-//	}
-	
-//	@Bean
-//	public GlobalExceptionHandler exceptionHandler(){
-//		return new GlobalExceptionHandler();
-//	}
-	/*@Bean
-    public TodoController todoController() {
-        return new TodoController();
-    }
-
-    @Bean
-    public TaskService taskService() {
-        return new TaskService();
-    }*/
 }

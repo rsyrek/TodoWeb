@@ -44,6 +44,7 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -84,11 +85,6 @@
 			<artifactId>spring-data-jpa</artifactId>
 			<version>1.7.2.RELEASE</version>
 		</dependency>
-		<!-- <dependency> <groupId>org.json</groupId> <artifactId>json</artifactId> 
-			<version>20141113</version> </dependency> <dependency> <groupId>org.codehaus.jackson</groupId> 
-			<artifactId>jackson-mapper-asl</artifactId> <version>1.9.13</version> </dependency> 
-			<dependency> <groupId>net.sf.json-lib</groupId> <artifactId>json-lib</artifactId> 
-			<version>2.4</version> <classifier>jdk15</classifier> </dependency> -->
 
 		<!-- JSON Processing -->
 		<dependency>

@@ -18,13 +18,7 @@ public class TodoContainerRepository {
 	}
 	
 	public Todo findTaskById(long id){
-		System.err.println("in contener js");
 		int index = 0;
-		Todo task = new Todo();
-		task.setId(1);
-		task.setText("tekstauto");
-		task.setDone(true);
-		todoList.add(task);
 		for(Todo t : todoList){
 			if(t.getId() == id) break;
 			index++;
@@ -33,7 +27,6 @@ public class TodoContainerRepository {
 	}
 	
 	public boolean addTask(long id, String text, boolean done){
-		System.out.println("In ccontainer add");
 		Todo task = new Todo();
 		task.setId(id);
 		task.setText(text);

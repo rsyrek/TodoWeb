@@ -1,45 +1,40 @@
 package services;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import entities.Todo;
-import repositories.TodoContainerRepository;
+import repositories.TodoRepository;
 
 @Service
 public class TaskService {
 	@Autowired
-	private TodoContainerRepository todoContainer;
+	private TodoRepository repository;
 	
-	public String showTask(String name) {
-        return "I have to do that: " + name;
-    }
+	public void addElement(String text, boolean done) {
+		Todo todo = new Todo();
+		todo.setText(text);
+		todo.setDone(done);
+		repository.addTodo(todo);
+	}
 
-	public String doneTask(String name) {
-		return "I have done that: " + name;
+	public Todo showById(long id) {
+		return repository.getById(id);
 	}
-	
-	public List<Todo> showList(){
-		return todoContainer.findAll();
+
+	public List<Todo> showAll() {
+		return repository.findAll();
 	}
-	
-	public String addElement(long id, String text, boolean done){
-		System.err.println(" id: " + id + " tekst: " + text + " done: " + done);
-		if(todoContainer.addTask(id, text, done)){
-			System.err.println("In service IF");
-			return "Added task with id: " + id;
+
+	public void addMany(long howMany) {
+		long index = 0;
+		while(index++ < howMany){
+			Todo todo = new Todo();
+			todo.setText("Zadanie " + index);
+			todo.setDone(index % 2 == 0);
+			repository.addTodo(todo);
 		}
-		else{
-			System.err.println("In service ELSE");
-			return "Adding fail";
-		}
-	}
-	
-	public Todo showById(long id){
-		System.err.println("in service js");
-		return todoContainer.findTaskById(id);
 	}
 }
