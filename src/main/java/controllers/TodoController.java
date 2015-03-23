@@ -20,9 +20,8 @@ public class TodoController {
     private TaskService taskService;
 	
 	@RequestMapping(value = "/add/{text}/{done}", method = RequestMethod.GET)
-    public String addTask(@PathVariable("text") String text, @PathVariable("done") boolean done) {
+    public void addTask(@PathVariable("text") String text, @PathVariable("done") boolean done) {
     	taskService.addElement(text, done);
-    	return "redirect:/db/show";
     }
     
     @RequestMapping(value = "/showid/{id}", method = RequestMethod.GET)
