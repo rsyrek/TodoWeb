@@ -1,5 +1,6 @@
 package todoweb;
 
+import org.fest.assertions.Assertions;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,13 +15,13 @@ import repositories.TodoRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
+@Transactional
 public class TodoRepositoryTest {
-    
+   
 	@Autowired
     private TodoRepository repository;
 
 	@Test
-    @Transactional
     public void shouldFindOneElementAfterPersist() {
 		Todo todo = new Todo();
 		todo.setText("tekst");
@@ -30,7 +31,6 @@ public class TodoRepositoryTest {
     }
 	
 	@Test
-    @Transactional
     public void shouldFindOneElementAfterMerge() {
 		Todo todo = new Todo();
 		todo.setText("tekst");
@@ -40,36 +40,52 @@ public class TodoRepositoryTest {
     }
 
 	@Test
-    @Transactional
     public void shouldFindTodoWithId3() {
+		long id = 0;
 		int index = 0;
 		while (index ++ < 3){
 			Todo todo = new Todo();
 			todo.setText("Zadanie " + index);
 			todo.setDone(true);
-	        repository.addTodo(todo);
+	        id = repository.addTodo(todo);
 		}
-        Assert.assertTrue(repository.getById(3).getId() == 3);
+		Assertions.assertThat(repository.getById(id).getId()).isEqualTo(id);
     }
     
+	@Test
+	public void shouldClearTable(){
+		Todo todo = new Todo();
+		todo.setText("tekst");
+		todo.setDone(true);
+        repository.addTodo(todo);
+        Assertions.assertThat(repository.findAll()).isNotEmpty();
+        repository.clearTable();
+        Assertions.assertThat(repository.findAll()).isEmpty();
+	}
 	
-//	@Before
-//    public void setUp() {
-//        mockMvc = MockMvcBuilders.standaloneSetup(repository).build();
-//        
-//    }
-//    @Test
-//    public void shouldAdd1TaskAndReturnListOf1() throws Exception {
-//        mockMvc.perform(get("/db/add/tekst/true")).andExpect(status.isOK).andExpect(MockMvcResultMatchers.content().string("I have to do that: NAME"));
-//    }
-//    
-//    @Test
-//    public void shouldShowDoneTask() throws Exception{
-//    	mockMvc.perform(get("/app/task/NAME/done")).andExpect(MockMvcResultMatchers.content().string("Task 0: NAME is done"));
-//    }
-//    
-//    @Test
-//    public void shouldShowUnDoneTask() throws Exception{
-//    	mockMvc.perform(get("/app/task/NAME/undone")).andExpect(MockMvcResultMatchers.content().string("Task 0: NAME is undone"));
-//    }
+	@Test
+	public void shouldDeleteOneTodo(){
+		long id;
+		int startSize;
+		Todo todo = new Todo();
+		todo.setText("tekst");
+		todo.setDone(true);
+		id = repository.addTodo(todo);
+		startSize = repository.findAll().size();
+		repository.deleteTodoId(id);
+		Assertions.assertThat(repository.findAll().size() + 1).isEqualTo(startSize);
+	}
+
+	@Test
+	public void shouldUpdateTask(){
+		long id;
+		Todo todo = new Todo();
+		todo.setText("tekst");
+		todo.setDone(true);
+		id = repository.addTodo(todo);
+		System.out.println(todo);
+		repository.updateTodo(id, false);
+		System.out.println(repository.getById(id));
+		Assertions.assertThat(repository.getById(id).getDone()).isEqualTo(false);
+	}
 }

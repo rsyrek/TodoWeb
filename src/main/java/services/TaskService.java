@@ -13,11 +13,11 @@ public class TaskService {
 	@Autowired
 	private TodoRepository repository;
 	
-	public void addElement(String text, boolean done) {
+	public long addElement(String text, boolean done) {
 		Todo todo = new Todo();
 		todo.setText(text);
 		todo.setDone(done);
-		repository.addTodo(todo);
+		return repository.addTodo(todo);
 	}
 
 	public Todo showById(long id) {
@@ -36,5 +36,21 @@ public class TaskService {
 			todo.setDone(index % 2 == 0);
 			repository.addTodo(todo);
 		}
+	}
+
+	public void clearData(){
+		repository.clearTable();
+	}
+
+	public void deleteDataId(long id) {
+		repository.deleteTodoId(id);
+	}
+
+	public void updateElement(long id, boolean done) {
+		repository.updateTodo(id, done);
+	}
+	
+	public void deleteDoneData(){
+		repository.deleteDoneTodo();
 	}
 }

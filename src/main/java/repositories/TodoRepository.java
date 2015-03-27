@@ -19,7 +19,7 @@ public class TodoRepository {
     public List<Todo> findAll() {
         return em.createQuery("select t from Todo t", Todo.class).getResultList();
     }
-    
+   
     public Todo getById(long id){
     	return em.find(Todo.class, id);
     }
@@ -28,7 +28,25 @@ public class TodoRepository {
     	em.merge(todo);
     }
     
-    public void addTodo(Todo todo){
+    public long addTodo(Todo todo){
     	em.persist(todo);
+    	return todo.getId();
     }
+    
+    public void clearTable(){
+    	em.createQuery("delete from Todo where 1 = 1").executeUpdate();
+    }
+
+	public void deleteTodoId(long id) {
+		em.createQuery("delete from Todo where id = " + id).executeUpdate();
+	}
+
+	public void updateTodo(long id, boolean done) {
+		em.find(Todo.class, id).setDone(done);
+//		em.createQuery("update Todo set done = " + done + " where id = " + id).executeUpdate();
+	}
+	
+	public void deleteDoneTodo() {
+		em.createQuery("delete from Todo where done = 'true'").executeUpdate();
+	}
 }
