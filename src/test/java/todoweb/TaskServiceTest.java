@@ -20,12 +20,32 @@ public class TaskServiceTest {
     private TaskService service;
 
     @Test
-    public void shouldShowTaskWithId2() throws Exception {
-//    	Mockito.mock(TodoRepository.class);
+    public void shouldCallAddTodoOnRepositoryWithGivenTodo() throws Exception {
     	String text = "tekst";
 		boolean done = true;
-		
 		service.addElement(text, done);
 		Mockito.verify(repository).addTodo(new Todo(text, done));
+    }
+    
+    @Test
+    public void shouldCallGetByIdOnRepositoryWithGivenId(){
+    	long id = 3;
+    	service.showById(id);
+    	Mockito.verify(repository).getById(id);
+    }
+    
+    @Test
+    public void shouldCallDeleteTodoIdOnRepositoryWithGivenId(){
+    	long id = 3;
+    	service.deleteDataId(id);
+    	Mockito.verify(repository).deleteTodoId(id);
+    }
+    
+    @Test
+    public void shouldCallUpdateTodoWithGivenIdAndDone(){
+    	long id = 3;
+    	boolean done = true;
+    	service.updateElement(id, done);
+    	Mockito.verify(repository).updateTodo(id, done);
     }
 }

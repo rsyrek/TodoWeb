@@ -88,4 +88,14 @@ public class TodoRepositoryTest {
 		System.out.println(repository.getById(id));
 		Assertions.assertThat(repository.getById(id).getDone()).isEqualTo(false);
 	}
+	
+	@Test
+	public void shouldDeleteDoneTodos(){
+		Assertions.assertThat(repository.findAll()).isEmpty();
+		repository.addTodo(new Todo("tekst", true));
+		repository.addTodo(new Todo("tekst2", false));
+		Assertions.assertThat(repository.findAll().size()).isEqualTo(2);
+		repository.deleteDoneTodo();
+		Assertions.assertThat(repository.findAll().size()).isEqualTo(1);
+	}
 }
