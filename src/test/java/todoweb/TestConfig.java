@@ -51,4 +51,12 @@ public class TestConfig {
 	    properties.setProperty("hibernate.show_sql", "true");
 	    return properties;
 	}
+	
+//	@Bean
+//	public ViewResolver viewResolver(){
+//		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+//		resolver.setPrefix("/webapp/");
+//		resolver.setSuffix(".jsp");
+//		return resolver;
+//	}
 }

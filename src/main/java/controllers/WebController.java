@@ -4,25 +4,28 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import services.TaskService;
 import entities.Todo;
 
 @Controller
-@RequestMapping(value = "/db")
-public class TodoController {
+@RequestMapping(value = "/web")
+public class WebController {
 
 	@Autowired
     private TaskService taskService;
 	
 	@RequestMapping(value = "/add/{text}/{done}")
-    public void addTask(@PathVariable("text") String text, @PathVariable("done") boolean done) {
+    public String addTask(@PathVariable("text") String text, @PathVariable("done") boolean done) {
     	taskService.addElement(text, done);
+    	return "redirect:/web/page";
     }
    
     @RequestMapping(value = "/showid/{id}", method = RequestMethod.GET)
@@ -67,29 +70,30 @@ public class TodoController {
     	taskService.updateElement(id, done);
     }
     
-    @RequestMapping(value = "/", method = RequestMethod.DELETE)
-    @ResponseBody
-    public void deleteDone(){
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String deleteDone(){
     	taskService.deleteDoneData();
+    	return "redirect:/web/page";
     }
     
-    @RequestMapping(value = "/addStudent", method = RequestMethod.GET)
-    public String addStudent()//@ModelAttribute("SpringWeb")Todo todo, ModelMap model) {
-    {
-//       model.addAttribute("id", todo.getId());
-//       model.addAttribute("text", todo.getText());
-//       model.addAttribute("done", todo.getDone());
-
-       return "page13";
+    
+    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    public String showOnPage(Model model) {
+    	List<Todo> todoList = taskService.showAll();
+    	model.addAttribute("todoList", todoList);
+        return "page13";
     }
     
-//    @RequestMapping(value = "/addStudent", method = RequestMethod.POST)
-//    public String addStudent2()//@ModelAttribute("SpringWeb")Todo todo, ModelMap model) {
-//    {
-////       model.addAttribute("id", todo.getId());
-////       model.addAttribute("text", todo.getText());
-////       model.addAttribute("done", todo.getDone());
-//
-//       return "page";
-//    }
+    @RequestMapping(value = "/page", method = RequestMethod.POST)
+    public String addFromPage(String text) {
+    	System.err.println("nie to");
+    	taskService.addElement(text, false);
+    	return "redirect:/web/page";
+    }
+    
+    @RequestMapping(value = "/page/update", method = RequestMethod.GET)
+    public String updateFromPage(@RequestParam(value="chckTodo", required=false) Long[] toChange) {
+    	taskService.updateElements(toChange);
+    	return "redirect:/web/page";
+    }
 }

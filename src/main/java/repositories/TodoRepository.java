@@ -43,10 +43,25 @@ public class TodoRepository {
 
 	public void updateTodo(long id, boolean done) {
 		em.find(Todo.class, id).setDone(done);
-//		em.createQuery("update Todo set done = " + done + " where id = " + id).executeUpdate();
 	}
 	
 	public void deleteDoneTodo() {
 		em.createQuery("delete from Todo where done = 'true'").executeUpdate();
+	}
+
+	public void changeTodos(Long[] toChange) {
+		List<Todo> list = em.createQuery("select t from Todo t", Todo.class).getResultList();
+		boolean flag = false;
+		for(Todo task : list){
+			if(toChange != null){
+				for(Long idToChange : toChange){
+					if(idToChange == task.getId()){
+						flag = true;
+					}
+				}
+			}
+			task.setDone(flag);
+			flag = false;
+		}
 	}
 }

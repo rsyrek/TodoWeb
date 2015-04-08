@@ -15,14 +15,16 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 
 @ComponentScan(value = {"controllers,entities,repositories,services"})
 @EnableWebMvc
 @EnableTransactionManagement
 @Configuration
-public class AppConfig{
+public class AppConfig {
 //	@Bean
 //	public DataSource dataSource() {
 //	    EmbeddedDatabaseBuilder databaseBuilder = new EmbeddedDatabaseBuilder();
@@ -64,4 +66,17 @@ public class AppConfig{
 	    properties.setProperty("hibernate.show_sql", "true");
 	    return properties;
 	}
+	
+	@Bean
+	public ViewResolver viewResolver(){
+		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+		resolver.setPrefix("/WEB-INF/");
+		resolver.setSuffix(".jsp");
+		resolver.setViewClass(org.springframework.web.servlet.view.JstlView.class);
+		return resolver;
+	}
+	
+//	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer){
+//		configurer.enable();
+//	}
 }

@@ -53,4 +53,8 @@ public class TaskService {
 	public void deleteDoneData(){
 		repository.deleteDoneTodo();
 	}
+
+	public void updateElements(Long[] toChange) {
+		repository.changeTodos(toChange);
+	}
 }

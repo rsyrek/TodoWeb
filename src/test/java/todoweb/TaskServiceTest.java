@@ -48,4 +48,11 @@ public class TaskServiceTest {
     	service.updateElement(id, done);
     	Mockito.verify(repository).updateTodo(id, done);
     }
+    
+    @Test
+    public void shouldCallChangeTodosWithGivenArray(){
+    	Long[] array = {2L, 4L};
+    	service.updateElements(array);
+    	Mockito.verify(repository).changeTodos(array);
+    }
 }

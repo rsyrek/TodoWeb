@@ -10,6 +10,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseBody
     public String handleException() {
-        return "ERROR";
+        return "page";
     }
 }

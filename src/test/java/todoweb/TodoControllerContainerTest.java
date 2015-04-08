@@ -33,13 +33,13 @@ public class TodoControllerContainerTest {
         mockMvc.perform(get("/app/show/NAME")).andExpect(MockMvcResultMatchers.content().string("I have to do that: NAME"));
     }
    
-    @Test
-    public void shouldShowDoneTask() throws Exception{
-    	mockMvc.perform(get("/app/task/NAME/done")).andExpect(MockMvcResultMatchers.content().string("Task 0: NAME is done"));
-    }
-    
-    @Test
-    public void shouldShowUnDoneTask() throws Exception{
-    	mockMvc.perform(get("/app/task/NAME/undone")).andExpect(MockMvcResultMatchers.content().string("Task 0: NAME is undone"));
-    }
+//    @Test
+//    public void shouldShowDoneTask() throws Exception{
+//    	mockMvc.perform(get("/app/task/NAME/done")).andExpect(MockMvcResultMatchers.content().string("Task 0: NAME is done"));
+//    }
+//    
+//    @Test
+//    public void shouldShowUnDoneTask() throws Exception{
+//    	mockMvc.perform(get("/app/task/NAME/undone")).andExpect(MockMvcResultMatchers.content().string("Task 0: NAME is undone"));
+//    }
 }
